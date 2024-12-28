@@ -35,7 +35,7 @@ UFO_START_SPEED = 100
 EXPLOSION_SHEET = MODULE_DIR / "../img/explosion.png"
 EXPLOSION_SHEET_ROWS = 6
 EXPLOSION_SHEET_COLUMNS = 8
-EXPLOSION_SPRITE_HEIGHT = 256
+EXPLOSION_SPRITE_HEIGHT = 128
 
 class Spaceship(ImageParticle):
     def __init__(self, x, y):
