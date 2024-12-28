@@ -1,3 +1,5 @@
+import asyncio
+
 import pygame
 import random
 from pathlib import Path
@@ -252,4 +254,4 @@ class SpaceInvaders(Game):
 
 if __name__ == "__main__":
     game = SpaceInvaders("Space Invaders", size=SIZE)
-    game.run()
+    asyncio.run(game.run())

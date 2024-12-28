@@ -1,4 +1,6 @@
 import pygame
+import asyncio
+
 
 class Game:
 
@@ -15,9 +17,9 @@ class Game:
         pygame.display.set_caption(self.title)
         self.screen = pygame.display.set_mode(self.size)
 
-
-    def game_loop(self):
+    async def game_loop(self):
         while True:
+            await asyncio.sleep(0)
             # Berechnung der Zeitdifferenz seit dem letzten Frame
             self.dt = self.clock.tick(self.fps) / 1000
             if self.event_handling() == False:
@@ -25,6 +27,7 @@ class Game:
             if self.update_game() == False:
                 break
             self.draw_game()
+
 
     def exit_game(self):
         pygame.quit()
@@ -46,8 +49,8 @@ class Game:
     def draw_game(self):
         pygame.display.flip()
 
-    def run(self):
+    async def run(self):
         self.init_game()
-        self.game_loop()
+        await self.game_loop()
         self.exit_game()
 

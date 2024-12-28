@@ -7,7 +7,6 @@ SIZE = (WIDTH, HEIGHT)
 
 async def main():
     game = src.space_invaders.SpaceInvaders("Space Invaders", size=SIZE)
-    game.run()
-    await asyncio.sleep(0)
+    await game.run()
 
 asyncio.run(main())
