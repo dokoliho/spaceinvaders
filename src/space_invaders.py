@@ -62,8 +62,10 @@ class Ufo(ImageParticle):
 
     def update(self, dt, game):
         super().update(dt)
-        if self.position[0] < 0 or self.position[0] > WIDTH:
-            self.velocity = (-self.velocity[0], self.velocity[1])
+        if self.position[0] < 0:
+            self.velocity = (game.ufo_speed, 0)
+        if self.position[0] > WIDTH:
+            self.velocity = (-game.ufo_speed, 0)
         self._time_since_last_drop += dt
         time_between_drops = 1 / self.drop_rate
         if self._time_since_last_drop > time_between_drops:
@@ -169,6 +171,7 @@ class SpaceInvaders(Game):
     def init_game(self):
         super().init_game()
         ExplosionSprite.prepare_sprite_sheet()
+        pygame.mouse.set_visible(False)
         width, height = self.size
         self.ship = Spaceship(width // 2, height)
         self.bullets = []
@@ -193,13 +196,22 @@ class SpaceInvaders(Game):
     def handle_event(self, event):
         if not super().handle_event(event):
             return False
+
+        if event.type == pygame.FINGERMOTION:
+            movement_left = event.dx < 0
+            movement_right = event.dx > 0
+        else:
+            movement_left = None
+            movement_right = None
+
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_SPACE]:
+        mouse_button_pressed = (event.type == pygame.MOUSEBUTTONDOWN)
+        if (keys[pygame.K_SPACE] or mouse_button_pressed) and self.ship.alive:
             bullet = Bullet(self.ship.position[0], self.ship.position[1])
             self.bullets.append(bullet)
-        if keys[pygame.K_LEFT]:
+        if keys[pygame.K_LEFT] or movement_left:
             self.ship.velocity = (-SHIP_SPEED, 0)
-        elif keys[pygame.K_RIGHT]:
+        elif keys[pygame.K_RIGHT] or movement_right:
             self.ship.velocity = (SHIP_SPEED, 0)
         else:
             self.ship.velocity = (0, 0)
@@ -208,6 +220,8 @@ class SpaceInvaders(Game):
     def update_game(self):
         super().update_game()
         self.ship.update(self.dt)
+        self.ship.position = (max(0, self.ship.position[0]), self.ship.position[1])
+        self.ship.position = (min(self.size[0], self.ship.position[0]), self.ship.position[1])
         self.bonus_particles = [b for b in self.bonus_particles if b.is_alive_after_update(self.dt, self)]
         self.bullets = [b for b in self.bullets if b.is_alive_after_update(self.dt, self)]
         self.bombs = [b for b in self.bombs if b.is_alive_after_update(self.dt, self)]

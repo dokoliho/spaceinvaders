@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Invaders</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column; /* Elemente vertikal anordnen */
+            align-items: center;    /* Zentriere alle Elemente horizontal */
+            justify-content: start; /* Elemente von oben nach unten anordnen */
+            background-color: #ffffff;
+            font-family: Arial, sans-serif;
+            color: #333;
+            height: 100vh;
+        }
+        header {
+            text-align: center;
+            margin: 20px 0; /* Abstand um den Header herum */
+        }
+        iframe {
+            max-width: 640px;
+            width: 100%;  /* Passt sich an die verfügbare Breite an */
+            height: 80vh; /* Höhe als Prozentsatz der Bildschirmhöhe */
+            max-height: 400px; /* Maximale Höhe von 400px */
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Space Invaders</h1>
+        <p>Das nachfolgende Spiel wurde in der Veranstaltung Programmieren I<br>
+        des Studiengangs Media Engineering entwickelt.</p>
+    </header>
+    <iframe
+        src="https://html-classic.itch.zone/html/12368609/index.html"
+        allowfullscreen>
+    </iframe>
+</body>
+</html>
